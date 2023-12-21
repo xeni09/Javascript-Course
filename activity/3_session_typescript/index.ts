@@ -1,5 +1,6 @@
 // Ejercicio 1
 // Definición de la interfaz 'Person'
+console.log('Ejercicio 1');
 interface Person {
   name: string;
   age: number;
@@ -12,18 +13,19 @@ const getPersonValues = (person: Person): (string | number)[] => {
   return [name, age, profession];
 };
 
-// Ejemplo de uso
-const lucas: Person = {
+// Ejemplo
+let person: Person = {
   name: "Lucas",
   age: 28,
   profession: "Full Stack",
 };
 
-const valuesArray: (string | number)[] = getPersonValues(lucas);
-console.log(valuesArray); // Salida: ["Lucas", 28, "Full Stack"]
+const valuesPersonArray: (string | number)[] = getPersonValues(person);
+console.log(valuesPersonArray); // Salida: ["Lucas", 28, "Full Stack"]
 
 
 // Ejercicio 2
+console.log('Ejercicio 2');
 
 function sumOrConcatenate(param1: number | string, param2: number | string): number | string {
   if (typeof param1 === 'number' && typeof param2 === 'number') {
@@ -33,27 +35,26 @@ function sumOrConcatenate(param1: number | string, param2: number | string): num
     // Ambos parámetros son strings, devuelve la concatenación con el símbolo "-"
     return `${param1}-${param2}`;
   } else {
-    // Un parámetro es número y el otro es string, devuelve la concatenación con ":"
-    return `${param1}:${param2}`;
+    // Un parámetro es número y el otro es string, devuelve la concatenación con ":'+"
+    return `${param1}+${param2}`;
   }
 }
 
-// Ejemplos de uso
-console.log(sumOrConcatenate(4, 3));          // --> 7
-console.log(sumOrConcatenate(4, "hello"));     // --> 4:hello
-console.log(sumOrConcatenate("hello", "world"));// --> hello-world
+// Ejemplo
+console.log((sumOrConcatenate(5, 20)), ('--> la suma de dos numeros'));     
+console.log((sumOrConcatenate("Hola", "caracola")),('--> dos strings con el simbolo "-"'));   
+console.log((sumOrConcatenate(5, "tomates")), ('--> numero y string con el simbolo "+'));  
 
 
 // Ejercicio 3
+console.log('Ejercicio 3');
 
-// Definición de la interfaz Car
+// Definición de las interfaces Car y Motorcycle
 interface Car {
   tires: number;
   turnOnEngine(): void;
   pressPedal(): void;
 }
-
-// Definición de la interfaz Motorcycle
 interface Motorcycle {
   tires: number;
   turnOnEngine(): void;
@@ -67,10 +68,7 @@ function isCar(vehicle: Car | Motorcycle): vehicle is Car {
 
 // Función que acepta un parámetro que puede ser Car o Motorcycle
 function operateVehicle(vehicle: Car | Motorcycle): void {
-  // Llamamos a la función común a ambas interfaces
   vehicle.turnOnEngine();
-
-  // Utilizamos el type predicate para decidir qué función llamar
   if (isCar(vehicle)) {
     vehicle.pressPedal();
   } else {
@@ -95,6 +93,7 @@ operateVehicle(car);        // Salida esperada: Car engine is on, Pressing the p
 operateVehicle(motorcycle); // Salida esperada: Motorcycle engine is on, Opening the throttle on the motorcycle
 
 // Ejercicio 4
+console.log('Ejercicio 4');
 
 function removeFirstEntry<T>(arr: T[]): T[] {
   return arr.slice(1);
@@ -109,8 +108,16 @@ const unsupportedArray = [{name: 'Lucas', surname: 'Fernandez'}, 'Hello', 22];
 const newStrArray = removeFirstEntry(strArray);
 const newNumArray = removeFirstEntry(numArray);
 const newMixedArray = removeFirstEntry(mixedArray);
-// const newUnsupportedArray = removeFirstEntry(unsupportedArray); // Esta línea generará un error ya que el tipo de elemento no es compatible
+
 
 console.log(newStrArray);    // Salida esperada: ['World', 'Im', 'a', 'Full', 'Stack', 'Developer']
 console.log(newNumArray);    // Salida esperada: [2, 3, 4, 5, 6, 7]
 console.log(newMixedArray);  // Salida esperada: ['I', 'have', 3, 'tasks']
+
+console.log('Ejercicio 4 - Forma de que el unsopported Array pueda ser aceptado, entiendo que con esto se esta sacrificando la seguridad de los tipos');
+
+function removeFirstEntry2(arr: any[]): any[] {
+  return arr.slice(1);
+}
+const newUnsupportedArray = removeFirstEntry2(unsupportedArray);
+console.log(newUnsupportedArray);  // Salida esperada: ['Hello', 22]  
